@@ -27,7 +27,7 @@ minecraft {
 }
 
 dependencies {
-    // you may put jars on which you depend on in ./libs
+    // you may put jars on which you depend on in ./others
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"

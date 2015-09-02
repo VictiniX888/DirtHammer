@@ -8,8 +8,9 @@ import net.minecraftforge.common.MinecraftForge;
 import victinix.dirthammer.events.EventDropsAdd;
 import victinix.dirthammer.events.EventDropsRemove;
 import victinix.dirthammer.items.ModItems;
-import victinix.dirthammer.libs.Data;
-import victinix.dirthammer.libs.Tabs;
+import victinix.dirthammer.others.Data;
+import victinix.dirthammer.others.Recipes;
+import victinix.dirthammer.others.Tabs;
 
 @Mod(modid = Data.MODID, name = Data.MODNAME, version = Data.VERSION)
 
@@ -24,6 +25,7 @@ public class DirtHammer {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
+        Recipes.Recipes();
     }
 
     @Mod.EventHandler
