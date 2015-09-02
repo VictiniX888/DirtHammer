@@ -1,0 +1,16 @@
+[
+{
+  "modid": "dirthammer",
+  "name": "Dirt Hammer",
+  "description": "Dirt to diamonds!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["VictiniX888"],
+  "credits": "The Forge and FML guys, for making Forge",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
