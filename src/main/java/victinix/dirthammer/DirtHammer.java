@@ -5,7 +5,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
-import victinix.dirthammer.events.EventDrops;
+import victinix.dirthammer.events.EventDropsAdd;
+import victinix.dirthammer.events.EventDropsRemove;
 import victinix.dirthammer.items.ModItems;
 import victinix.dirthammer.libs.Data;
 import victinix.dirthammer.libs.Tabs;
@@ -29,6 +30,7 @@ public class DirtHammer {
     public void postInit(FMLPostInitializationEvent event) {
 
         Tabs.postInit();
-        MinecraftForge.EVENT_BUS.register(new EventDrops());
+        MinecraftForge.EVENT_BUS.register(new EventDropsAdd());
+        MinecraftForge.EVENT_BUS.register(new EventDropsRemove());
     }
 }
