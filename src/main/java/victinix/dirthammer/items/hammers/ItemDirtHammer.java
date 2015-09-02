@@ -3,16 +3,10 @@ package victinix.dirthammer.items.hammers;
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.world.World;
-import victinix.dirthammer.libs.Data;
-import victinix.dirthammer.libs.Tabs;
+import victinix.dirthammer.others.Data;
+import victinix.dirthammer.others.Tabs;
 
 import java.util.Set;
 
