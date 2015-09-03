@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import victinix.dirthammer.items.ModItems;
 
 public class Tabs {
 
@@ -34,10 +35,10 @@ public class Tabs {
         }
     }
 
-    public static final CustomCreativeTab tabRandom = new CustomCreativeTab("tabRandom");
+    public static final CustomCreativeTab tabDirtHammer = new CustomCreativeTab("tabDirtHammer");
 
     public static void postInit() {
 
-        tabRandom.setTabIconItemStack(new ItemStack(Items.ender_eye));
+        tabDirtHammer.setTabIconItemStack(new ItemStack(ModItems.dirtHammer));
     }
 }

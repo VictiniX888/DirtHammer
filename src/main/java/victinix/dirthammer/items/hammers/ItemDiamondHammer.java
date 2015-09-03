@@ -23,7 +23,7 @@ public class ItemDiamondHammer extends ItemTool {
         super(1f, toolMaterial, isDirt);
         setUnlocalizedName(Data.MODID + ":" + name);
         setTextureName(Data.MODID + ":" + name);
-        setCreativeTab(Tabs.tabRandom);
+        setCreativeTab(Tabs.tabDirtHammer);
         GameRegistry.registerItem(this, name);
     }
 }

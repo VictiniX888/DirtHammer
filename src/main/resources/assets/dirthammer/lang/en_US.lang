@@ -1,5 +1,6 @@
 #Hammers
 item.dirthammer:dirtHammer.name=Dirt Hammer
+item.dirthammer:diamondHammer.name=Diamond Hammer
 
 #Tabs
-itemGroup.tabRandom=Dirt Hammer
+itemGroup.tabDirtHammer=Dirt Hammer
