@@ -2,5 +2,8 @@
 item.dirthammer:dirtHammer.name=Dirt Hammer
 item.dirthammer:diamondHammer.name=Diamond Hammer
 
+#Materials
+item.dirthammer.shatteredDiamond=Shattered Diamond
+
 #Tabs
 itemGroup.tabDirtHammer=Dirt Hammer

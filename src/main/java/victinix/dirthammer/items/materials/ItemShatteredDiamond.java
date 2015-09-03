@@ -14,7 +14,7 @@ public class ItemShatteredDiamond extends Item {
         super();
         setUnlocalizedName(Data.MODID + ":" + name);
         setTextureName(Data.MODID + ":" + name);
-        setCreativeTab(Tabs.tabRandom);
+        setCreativeTab(Tabs.tabDirtHammer);
         GameRegistry.registerItem(this, name);
     }
 }
