@@ -18,7 +18,7 @@ public class EventDropsAdd {
         }
 
         if(event.block == Blocks.dirt && event.getPlayer().getHeldItem() != null && event.getPlayer().getHeldItem().getItem() == ModItems.diamondHammer) {
-            event.world.spawnEntityInWorld(new EntityItem(event.world, event.x, event.y, event.z, new ItemStack(Items.diamond)));
+            event.world.spawnEntityInWorld(new EntityItem(event.world, event.x, event.y, event.z, new ItemStack(ModItems.shatteredDiamond)));
         }
     }
 }

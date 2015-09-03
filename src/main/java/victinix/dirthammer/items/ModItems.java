@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
 import victinix.dirthammer.items.hammers.ItemDiamondHammer;
 import victinix.dirthammer.items.hammers.ItemDirtHammer;
+import victinix.dirthammer.items.materials.ItemShatteredDiamond;
 
 public class ModItems {
 
@@ -13,6 +14,8 @@ public class ModItems {
     public static Item dirtHammer;
     public static Item diamondHammer;
 
+    public static Item shatteredDiamond;
+
     public static void init() {
 
         DIRTHAMMER = EnumHelper.addToolMaterial("DIRTHAMMER", 0, 2000, 20f, 0, 0);
@@ -20,5 +23,7 @@ public class ModItems {
 
         dirtHammer = new ItemDirtHammer(ModItems.DIRTHAMMER);
         diamondHammer = new ItemDiamondHammer(ModItems.DIAMONDHAMMER);
+
+        shatteredDiamond = new ItemShatteredDiamond();
     }
 }
