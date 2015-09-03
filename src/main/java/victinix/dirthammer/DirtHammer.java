@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
+import victinix.dirthammer.blocks.ModBlocks;
 import victinix.dirthammer.events.EventDropsAdd;
 import victinix.dirthammer.events.EventDropsRemove;
 import victinix.dirthammer.items.ModItems;
@@ -20,12 +21,13 @@ public class DirtHammer {
     public void preInit(FMLPreInitializationEvent event) {
 
         ModItems.init();
+        ModBlocks.init();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
-        Recipes.Recipes();
+        Recipes.init();
     }
 
     @Mod.EventHandler

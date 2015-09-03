@@ -8,7 +8,7 @@ import victinix.dirthammer.items.ModItems;
 
 public class Recipes {
 
-    public static void Recipes() {
+    public static void init() {
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.dirtHammer, 1, 0), new Object[]{
                 "AAA",
