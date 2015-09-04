@@ -7,7 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityCompressor extends TileEntity implements ISidedInventory {
 
-    ItemStack[] inventory = new ItemStack[getSizeInventory()];
+    private ItemStack[] inventorySlots = new ItemStack[9];
+    private String name = "compressor";
 
     /**
      * Returns an array containing the indices of the slots that can be accessed by automation on the given side of this
@@ -15,20 +16,13 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      *
      */
     @Override
-    public int[] getAccessibleSlotsFromSide(int j) {
+    public int[] getAccessibleSlotsFromSide(int side) {
 
-        int accessibleSlot = -1;
-        for(int i = 0; i < getSizeInventory(); i++)
-            if(getStackInSlot(i) != null)
-                accessibleSlot = i;
-
-        if(accessibleSlot == -1) {
-            return new int[0];
+        if(side == 0) {
+            return new int[] { 9 };
         }
         else {
-            return new int[] {
-                    accessibleSlot
-            };
+            return new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
         }
     }
 
@@ -38,9 +32,9 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      *
      */
     @Override
-    public boolean canInsertItem(int i, ItemStack itemStack, int j) {
+    public boolean canInsertItem(int slot, ItemStack itemStack, int side) {
 
-        return true;
+        return isItemValidForSlot(slot, itemStack);
     }
 
     /**
@@ -49,9 +43,9 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      *
      */
     @Override
-    public boolean canExtractItem(int i, ItemStack itemStack, int j) {
+    public boolean canExtractItem(int slot, ItemStack itemStack, int side) {
 
-        if(i == 3) {
+        if(slot == 9 && side == 0) {
             return true;
         }
         else {
@@ -65,18 +59,17 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     @Override
     public int getSizeInventory() {
 
-        return 3;
+        return inventorySlots.length;
     }
 
     /**
      * Returns the stack in slot i
      *
      */
-
     @Override
     public ItemStack getStackInSlot(int i) {
 
-        return inventory[i];
+        return inventorySlots[i];
     }
 
     /**
@@ -85,49 +78,59 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      *
      */
     @Override
-    public ItemStack decrStackSize(int i, int j) {
+    public ItemStack decrStackSize(int slot, int i) {
 
-        if(inventory != null) {
-            ItemStack stackAt;
+        if(inventorySlots[i] != null) {
+            ItemStack itemStack;
 
-            if (inventory[i].stackSize <= j) {
-                stackAt = inventory[i];
-                inventory[i] = null;
-                return stackAt;
+            if(inventorySlots[i].stackSize <= i) {
+                itemStack = inventorySlots[i];
+                inventorySlots = null;
+                return itemStack;
             }
             else {
-                stackAt = inventory[i].splitStack(j);
-
-                if (inventory[i].stackSize == 0)
-                    inventory[i] = null;
-
-                return stackAt;
+                itemStack = inventorySlots[i].splitStack(i);
+                if(inventorySlots[i].stackSize == 0) {
+                    inventorySlots[i] = null;
+                }
+                return itemStack;
             }
         }
-
-        return null;
+        else {
+            return null;
+        }
     }
 
     /**
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      *
-     * @param p_70304_1_
      */
     @Override
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
-        return null;
+    public ItemStack getStackInSlotOnClosing(int i) {
+
+        if(inventorySlots[i] != null) {
+            ItemStack itemStack = inventorySlots[i];
+            inventorySlots[i] = null;
+            return itemStack;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      *
-     * @param p_70299_1_
-     * @param p_70299_2_
      */
     @Override
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
+    public void setInventorySlotContents(int i, ItemStack itemStack) {
 
+        inventorySlots[i] = itemStack;
+
+        if(itemStack != null && itemStack.stackSize > getInventoryStackLimit()) {
+            itemStack.stackSize = this.getInventoryStackLimit();
+        }
     }
 
     /**
@@ -135,7 +138,8 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      */
     @Override
     public String getInventoryName() {
-        return null;
+
+        return name;
     }
 
     /**
@@ -143,6 +147,7 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      */
     @Override
     public boolean hasCustomInventoryName() {
+
         return false;
     }
 
@@ -151,17 +156,28 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      */
     @Override
     public int getInventoryStackLimit() {
-        return 0;
+
+        return 1;
     }
 
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      *
-     * @param p_70300_1_
      */
     @Override
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
-        return false;
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+
+        if(worldObj.getTileEntity(xCoord, yCoord, zCoord) != this) {
+            return false;
+        }
+        else {
+            if(entityPlayer.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     @Override
@@ -177,11 +193,15 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      *
-     * @param p_94041_1_
-     * @param p_94041_2_
      */
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
-        return false;
+    public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
+
+        if(slot == 9) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

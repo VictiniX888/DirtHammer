@@ -37,4 +37,7 @@ public class DirtHammer {
         MinecraftForge.EVENT_BUS.register(new EventDropsAdd());
         MinecraftForge.EVENT_BUS.register(new EventDropsRemove());
     }
+
+    @Mod.Instance(Data.MODID)
+    public static DirtHammer instance;
 }
