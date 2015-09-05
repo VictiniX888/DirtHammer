@@ -23,6 +23,7 @@ public class DirtHammer {
 
         ModItems.init();
         ModBlocks.init();
+        ModBlocks.registerTileEntities();
     }
 
     @Mod.EventHandler
