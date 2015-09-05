@@ -19,10 +19,10 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     public int[] getAccessibleSlotsFromSide(int side) {
 
         if(side == 0) {
-            return new int[] { 9 };
+            return new int[] { 8 };
         }
         else {
-            return new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            return new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
         }
     }
 
@@ -45,7 +45,7 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     @Override
     public boolean canExtractItem(int slot, ItemStack itemStack, int side) {
 
-        if(slot == 9 && side == 0) {
+        if(slot == 8 && side == 0) {
             return true;
         }
         else {
@@ -197,7 +197,7 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
 
-        if(slot == 9) {
+        if(slot == 8) {
             return false;
         }
         else {
