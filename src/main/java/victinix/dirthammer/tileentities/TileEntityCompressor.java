@@ -2,12 +2,15 @@ package victinix.dirthammer.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityCompressor extends TileEntity implements ISidedInventory {
 
-    private ItemStack[] inventorySlots = new ItemStack[9];
+    private ItemStack[] inventorySlots = new ItemStack[getSizeInventory()];
+    public int firstSlot = 0;
+    public int lastSlot = 8;
     private String name = "compressor";
 
     /**
@@ -59,7 +62,7 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     @Override
     public int getSizeInventory() {
 
-        return inventorySlots.length;
+        return 9;
     }
 
     /**
@@ -77,26 +80,32 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
      * new stack.
      *
      */
-    @Override
-    public ItemStack decrStackSize(int slot, int i) {
-
-        if(inventorySlots[i] != null) {
+    public ItemStack decrStackSize(int slot, int i)
+    {
+        if (this.inventorySlots[slot] != null)
+        {
             ItemStack itemStack;
 
-            if(inventorySlots[i].stackSize <= i) {
-                itemStack = inventorySlots[i];
-                inventorySlots = null;
+            if (this.inventorySlots[slot].stackSize <= i)
+            {
+                itemStack = this.inventorySlots[slot];
+                this.inventorySlots[slot] = null;
                 return itemStack;
             }
-            else {
-                itemStack = inventorySlots[i].splitStack(i);
-                if(inventorySlots[i].stackSize == 0) {
-                    inventorySlots[i] = null;
+            else
+            {
+                itemStack = this.inventorySlots[slot].splitStack(i);
+
+                if (this.inventorySlots[slot].stackSize == 0)
+                {
+                    this.inventorySlots[slot] = null;
                 }
+
                 return itemStack;
             }
         }
-        else {
+        else
+        {
             return null;
         }
     }
@@ -157,7 +166,7 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
     @Override
     public int getInventoryStackLimit() {
 
-        return 1;
+        return 64;
     }
 
     /**
