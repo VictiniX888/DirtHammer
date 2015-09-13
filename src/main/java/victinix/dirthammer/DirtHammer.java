@@ -4,6 +4,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import victinix.dirthammer.blocks.ModBlocks;
 import victinix.dirthammer.events.EventDropsAdd;
@@ -13,6 +14,7 @@ import victinix.dirthammer.items.ModItems;
 import victinix.dirthammer.others.Data;
 import victinix.dirthammer.others.Recipes;
 import victinix.dirthammer.others.Tabs;
+import victinix.dirthammer.recipe.RecipeCompressor;
 
 @Mod(modid = Data.MODID, name = Data.MODNAME, version = Data.VERSION)
 

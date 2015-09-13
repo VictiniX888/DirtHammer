@@ -1,6 +1,8 @@
 package victinix.dirthammer.containers;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -10,12 +12,15 @@ import victinix.dirthammer.tileentities.TileEntityCompressor;
 public class ContainerCompressor extends Container {
 
     private TileEntityCompressor compressor;
+    private int timeCanCompress;
+    private int ticksCompressItemSoFar;
+    private int ticksPerItem;
 
     public ContainerCompressor(final InventoryPlayer inventoryPlayer, TileEntityCompressor tileEntityCompressor) {
 
         compressor = tileEntityCompressor;
 
-        for(int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             addSlotToContainer(new Slot(tileEntityCompressor, i, 17 + i * 18, 17));
         }
 
@@ -84,5 +89,51 @@ public class ContainerCompressor extends Container {
         }
 
         return stack;
+    }
+
+    @Override
+    public void addCraftingToCrafters(ICrafting iCrafting) {
+
+        super.addCraftingToCrafters(iCrafting);
+        iCrafting.sendProgressBarUpdate(this, 0, compressor.timeCanCompress);
+        iCrafting.sendProgressBarUpdate(this, 1, compressor.ticksCompressItemSoFar);
+        iCrafting.sendProgressBarUpdate(this, 2, compressor.ticksPerItem);
+    }
+
+    /**
+     * Looks for changes made in the container, sends them to every listener.
+     */
+    @Override
+    public void detectAndSendChanges() {
+
+        super.detectAndSendChanges();
+
+        for(int i = 0; i < crafters.size(); i++) {
+            ICrafting iCrafting = (ICrafting)crafters.get(i);
+            if(timeCanCompress != compressor.timeCanCompress) {
+                iCrafting.sendProgressBarUpdate(this, 0, compressor.timeCanCompress);
+            }
+            if(ticksCompressItemSoFar != compressor.ticksCompressItemSoFar) {
+                iCrafting.sendProgressBarUpdate(this, 0, compressor.ticksCompressItemSoFar);
+            }
+            if(ticksPerItem != compressor.ticksPerItem) {
+                iCrafting.sendProgressBarUpdate(this, 0, compressor.ticksPerItem);
+            }
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int i, int j) {
+
+        if(i == 0) {
+            compressor.timeCanCompress = j;
+        }
+        if(i == 1) {
+            compressor.ticksCompressItemSoFar = j;
+        }
+        if(i == 2) {
+            compressor.ticksPerItem = j;
+        }
     }
 }
