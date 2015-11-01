@@ -1,6 +1,7 @@
 package victinix.dirthammer.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Slot;
@@ -279,12 +280,12 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
 
     public int compressingTime(ItemStack itemStack) {
 
-        return 200;
+        return 50;
     }
 
     public boolean canCompress() {
 
-        if (inventorySlots[0] == null || inventorySlots[1] == null || inventorySlots[2] == null || inventorySlots[3] == null || inventorySlots[4] == null || inventorySlots[5] == null || inventorySlots[6] == null || inventorySlots[7] == null) {
+        if ((inventorySlots[0] == null || inventorySlots[1] == null || inventorySlots[2] == null || inventorySlots[3] == null || inventorySlots[4] == null || inventorySlots[5] == null || inventorySlots[6] == null || inventorySlots[7] == null)) {
             return false;
         }
         else {
@@ -340,25 +341,28 @@ public class TileEntityCompressor extends TileEntity implements ISidedInventory 
             if(inventorySlots[0] != null && inventorySlots[1] != null && inventorySlots[2] != null && inventorySlots[3] != null && inventorySlots[4] != null && inventorySlots[5] != null && inventorySlots[6] != null && inventorySlots[7] != null) {
                 if(inventorySlots[0].getItem() == ModItems.shatteredDiamond && inventorySlots[1].getItem() == ModItems.shatteredDiamond && inventorySlots[2].getItem() == ModItems.shatteredDiamond && inventorySlots[3].getItem() == ModItems.shatteredDiamond && inventorySlots[4].getItem() == ModItems.shatteredDiamond && inventorySlots[5].getItem() == ModItems.shatteredDiamond && inventorySlots[6].getItem() == ModItems.shatteredDiamond && inventorySlots[7].getItem() == ModItems.shatteredDiamond) {
                     System.out.println("SD in input slot!");
-                    if(!compressingSomething() && canCompress()) {
-                        timeCanCompress = 150;
-                        if(compressingSomething()) {
-                            changedCompressingState = true;
+                    if(worldObj.getBlock(this.xCoord, this.yCoord + 1, this.zCoord) == Blocks.obsidian) {
+                        if(!compressingSomething() && canCompress()) {
+                            timeCanCompress = 40;
+                            if(compressingSomething()) {
+                                changedCompressingState = true;
+                            }
+                        }
+
+                        if(compressingSomething() && canCompress()) {
+                            ticksCompressItemSoFar++;
+                            if(ticksCompressItemSoFar == ticksPerItem) {
+                                ticksCompressItemSoFar = 0;
+                                ticksPerItem = compressingTime(inventorySlots[1]);
+                                compressItem();
+                                changedCompressingState = true;
+                            }
+                        }
+                        else {
+                            ticksCompressItemSoFar = 0;
                         }
                     }
 
-                    if(compressingSomething() && canCompress()) {
-                        ticksCompressItemSoFar++;
-                        if(ticksCompressItemSoFar == ticksPerItem) {
-                            ticksCompressItemSoFar = 0;
-                            ticksPerItem = compressingTime(inventorySlots[1]);
-                            compressItem();
-                            changedCompressingState = true;
-                        }
-                    }
-                    else {
-                        ticksCompressItemSoFar = 0;
-                    }
                 }
             }
 
